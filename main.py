@@ -2,25 +2,32 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 import time
-import random,string
+import random,string,os
 print("Yasin + Oberonskiiv2 Twitch Account Creator V2")
 print("For help DM: yasintr#0001 or Oberonskiiv2#0001 on Discord")
 createdaccounts = 0
 howmany = int(input("How many accounts you want to generate: "))
 howcooldown = int(input("How many seconds the cooldown of creating Accounts should be: "))
 
+def getusername():
+    total_bytes = os.stat('Data/userdictionary.txt').st_size
+    random_point = random.randint(0, total_bytes)
+    file = open('Data/userdictionary.txt')
+    file.seek(random_point)
+    file.readline()
+    return file.readline()
+
+
 if howcooldown < 1:
     print('You cannot wait ' + str(howcooldown) + ' seconds')
-    time.sleep(3)
-    quit()
+    time.sleep(1)
+    raise SystemExit
 
 while createdaccounts < howmany:
     # ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    dictionary = open("Data/userdictionary.txt")
-    lines = dictionary.readlines()
     createdaccounts = createdaccounts + 1
 
-    username = random.choice(lines)
+    username = getusername()
     password = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(12)])
     email = username + '@gmail.com'
     tokenlist = open("tokens.txt", "a")
@@ -46,6 +53,7 @@ while createdaccounts < howmany:
     driver.find_element_by_xpath(
         '/html/body/div[3]/div/div/div/div/div/div[1]/div/div/div[3]/form/div/div[3]/div/div[2]/div[3]/div/input').send_keys(
         "1998")
+    driver.find_element_by_xpath('/html/body/div[3]/div/div/div/div/div/div[1]/div/div/div[3]/form/div/div[4]/div/div[2]/button/div/div[2]').click()
     driver.find_element_by_xpath('//*[@id="email-input"]').send_keys(email)
 
     time.sleep(3)
@@ -67,10 +75,10 @@ while createdaccounts < howmany:
     accountlist.write(accountvalue)
 
     print("Account succesfully created")
-    print('Waiting ' + str(howcooldown) + 'seconds')
+    print('Waiting ' + str(howcooldown) + ' seconds')
     time.sleep(howcooldown)
 
 else:
     print('Succesfully created ' + str(howmany) + ' account/s')
     quti = input("Hit Enter to quit")
-    quit()
+    raise SystemExit
