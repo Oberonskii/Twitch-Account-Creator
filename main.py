@@ -1,5 +1,4 @@
 from selenium import webdriver
-from tiktokview import send
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 import time
@@ -44,7 +43,6 @@ while createdaccounts < howmany:
     print("Entering Account-Information")
     driver.find_element_by_xpath('//*[@id="signup-username"]').send_keys(username)
     driver.find_element_by_xpath('//*[@id="password-input"]').send_keys(password)
-    send("ab", "b")
     driver.find_element_by_xpath('//*[@id="password-input-confirmation"]').send_keys(password)
     driver.find_element_by_xpath(
         '/html/body/div[3]/div/div/div/div/div/div[1]/div/div/div[3]/form/div/div[3]/div/div[2]/div[1]/div/input').send_keys(
